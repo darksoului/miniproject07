@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Classifier</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #3498db, #e74c3c, #1abc9c, #f39c12);
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .btn {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .result.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .preview {
+            max-width: 300px;
+            margin-top: 20px;
+            border: 2px solid #333;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Image Classifier</h1>
+        <!-- Add the file input element -->
+        <label for="imageInput" class="btn">Select an Image</label>
+        <input type="file" id="imageInput" accept="image/*" style="display: none;">
+        <button id="classifyButton" class="btn">Classify</button>
+        <div id="result" class="result"></div>
+        <img id="preview" src="" alt="Preview" class="preview">
+    </div>
+    <script>
+const imageInput = document.getElementById('imageInput');
+const classifyButton = document.getElementById('classifyButton');
+const resultDiv = document.getElementById('result');
+const previewImage = document.getElementById('preview');
+
+// Define your Imagga API credentials and endpoint.
+const apiKey = 'acc_17f0de998845a72';
+const apiSecret = '5f34192cf07e3fdb4cbd5cf563319119';
+const apiUrl = 'https://api.imagga.com/v2/tags';
+
+// Function to send an image to Imagga API for classification.
+async function classifyImage(imageData) {
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            body: imageData,
+            headers: {
+                Authorization: `Basic ${btoa(`${apiKey}:${apiSecret}`)}`,
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('API request failed');
+        }
+
+        const data = await response.json();
+
+        // Get the top 5 tags with the highest confidence scores.
+        const topTags = data.result.tags
+            .slice(0, 5) // Change the number to control the number of tags displayed
+            .map((tag) => `${tag.tag.en} (${Math.round(tag.confidence)}%)`)
+            .join(', ');
+
+        resultDiv.innerText = `Top Tags: ${topTags}`;
+        resultDiv.classList.add('show'); // Show the result div
+
+    } catch (error) {
+        console.error(error);
+        resultDiv.innerText = 'Error occurred during classification. Please check your API credentials and network connection.';
+    }
+}
+
+// Handle image selection and classification.
+classifyButton.addEventListener('click', () => {
+    const file = imageInput.files[0];
+
+    if (file) {
+        // Display the selected image.
+        const imageURL = URL.createObjectURL(file);
+        previewImage.src = imageURL;
+
+        // Create a FormData object to send the image.
+        const formData = new FormData();
+        formData.append('image', file);
+
+        // Call the classification function with the FormData containing the image.
+        classifyImage(formData);
+    }
+});
+
+
+    </script>
+</body>
+</html>

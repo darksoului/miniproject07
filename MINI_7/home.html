@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <style>
+        body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #def5f7;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.card {
+    width: 200px;
+    height: 200px;
+    background-color: #9fffdf;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.card:hover {
+    background-color: #bdbdbd;
+}
+
+h2 {
+    color: #333;
+    font-weight: bold;
+}
+
+.card:hover h2 {
+    color: #000;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card" onclick="redirectToPage('IR_Detailed.html')">
+            <h2>Image Recognition</h2>
+        </div>
+        <div class="card" onclick="redirectToPage('Trans.html')">
+            <h2>Text Translator</h2>
+        </div>
+        <div class="card" onclick="redirectToPage('Notes.html')">
+            <h2>Notes</h2>
+        </div>
+        <div class="card" onclick="redirectToPage('http://localhost/MINI_7/insurance/insurance.php')">
+            <h2>Insurance Management</h2>
+        </div>
+        <div class="card" onclick="redirectToPage('http://localhost/MINI_7/password_manager.html')">
+            <h2>Password Manager</h2>
+        </div>
+    </div>
+
+    <script>
+        function redirectToPage(url) {
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>

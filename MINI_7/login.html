@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+    <style>
+    body {
+        background-color: rgb(193, 246, 246);
+        font-family: Arial, sans-serif;
+    }
+   
+    h1 {
+        color: rgba(231, 130, 246, 0.717);
+    }
+   
+    form {
+    width: 300px;
+    margin: 5px auto;
+    padding: 10px 55px;
+    }
+   
+    label {
+        display: block;
+        margin-bottom: 10px;
+        color:rgb(251, 96, 96);
+    }
+   
+    input{
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #220b0b;
+        border-radius: 30px;
+    }
+   
+    input[type="button"] {
+        width: 30%;
+        padding: 10px;
+        background-color: rgb(13, 243, 36);
+        color: black;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    </style>
+    <script>
+        function validate() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            // Check if the username and password are valid
+            if(username ==="Venkat" && password ==="venky@123") {
+                  window.location = "home.html";
+            } else {
+                alert("Invalid username or password!");
+            }
+        }
+    </script>
+</head>
+<body>
+    <br><br><br><br><br><br>
+    <center>
+    <h1>Welcome To Second Hand Market</h1>
+    <form>
+        <label for="username">UserName:</label>
+        <input type="text" id="username" name="username"><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"><br>
+
+        <input type="button" value="Login" onclick="validate()">
+    </form>
+    </center>
+</body>
+</html>

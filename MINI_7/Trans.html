@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Translator</title>
+    <style>
+        /* Your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .input-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            margin: 20px auto;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+        button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        p {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Text Translator</h1>
+    <div class="input-container">
+        <textarea id="inputText" placeholder="Enter text to translate"></textarea>
+        <button onclick="translateText()">Translate</button>
+        <p>Translated Text:</p>
+        <p id="translatedText"></p>
+    </div>
+
+    <script>
+        function translateText() {
+            const textToTranslate = document.getElementById("inputText").value;
+            const targetLanguage = "es"; // Change this to your target language code (e.g., 'es' for Spanish)
+            const apiKey = 'YOUR_MYMEMORY_API_KEY'; // Replace with your actual MyMemory API key
+            const sourceLanguage = "en"; // Change this to the source language of your text
+
+            // Endpoint for MyMemory API
+            const endpoint = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(textToTranslate)}&langpair=${sourceLanguage}|${targetLanguage}`;
+
+            // Send a GET request to the API
+            fetch(endpoint)
+                .then(response => response.json())
+                .then(data => {
+                    const translatedText = data.responseData.translatedText;
+                    document.getElementById("translatedText").textContent = translatedText;
+                })
+                .catch(error => {
+                    console.error("An error occurred: ", error);
+                });
+        }
+    </script>
+</body>
+</html>

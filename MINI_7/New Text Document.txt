@@ -1,0 +1,4 @@
+http://localhost/MINI_7/password_manager.html
+
+
+http://localhost/MINI_7/insurance/insurance.php
